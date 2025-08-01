@@ -83,10 +83,10 @@ public class BoardController {
     }
 
     @PutMapping("/board")
-    public boolean boardUpdate(int bno, String bcontent) {
+    public boolean boardUpdate(@RequestBody BoardDto boardDto) {
         for (BoardDto dto : list) {
-            if (dto.getBno() == bno) {
-                dto.setBcontent(bcontent);
+            if (dto.getBno() == boardDto.getBno()) {
+                dto.setBcontent(boardDto.getBcontent());
                 return true;
             }
         }
