@@ -89,3 +89,17 @@ public class AppStart {
 [ 코드 ] : 명령어
 [ 라이브러리 ] : 명령어들을 집합(메소드)해서 .jar 확장자로 만든 집합 , 미리 만들어진 코드 , 예] 도구 제공
 [ 프레임워크 ] : 라이브러리 + 개발에 필요한 환경설정 까지, 예] 개발 틀 제공
+
+[ REST ] : 웹의 자원을 관리하는 아키텍처/구조
+    1. 자원(Resources) , 행동(Method) , 표현
+    2. HTTP 프로토콜(규약) 이용한 클라이언트 와 서버 간의 일관성 통신 구성
+[ REST API ] : REST 아키텍처에 따른 API
+    1. REST 기반의 웹서비스 인터페이스 구축
+    2. HTTP 요청을 통해 자원(데이터)을 C R U D 할 수 있도록 제공
+[ RESTful API ]
+    1. REST API 의 아키텍처를 잘 사용하는지 대한 개념
+    2. 조건 :
+        1. 일관성 : "/member/XXXX" , "/board/XXXX"
+        2. 적절한 HTTP METHOD : POST(등록) , GET(조회) , PUT(수정) , DELETE(삭제)
+        3. 무상태성
+        4. 응답 타입은 JSON/ XML 제공
