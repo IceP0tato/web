@@ -3,7 +3,7 @@ create database waiting;
 use waiting;
 
 create table list (
-	num int,
+	num int auto_increment,
     constraint primary key(num),
     phone varchar(20),
     count int,
