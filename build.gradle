@@ -18,8 +18,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Spring Boot Web
+    implementation "org.apache.tomcat.embed:tomcat-embed-jasper" // JSP library
+    runtimeOnly 'com.mysql:mysql-connector-j' // MYSQL JDBC library
+    compileOnly 'org.projectlombok:lombok' // Lombok
+    annotationProcessor 'org.projectlombok:lombok' // Lombok
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
