@@ -2,9 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Page Title</title>
 </head>
 <body>
-    
+    <jsp:include page="/board/header.jsp"></jsp:include>
+    <div>
+        <h3>메인 페이지</h3>
+    </div>
 </body>
 </html>
