@@ -19,7 +19,7 @@ class SubClass extends SuperClass {
 
     }
 
-    @Deprecated // 해당 함수 사용하지 않음 알림 기능
+    // @Deprecated // 해당 함수 사용하지 않음 알림 기능
     public void method2() {
 
     }
