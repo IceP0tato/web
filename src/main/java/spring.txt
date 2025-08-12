@@ -90,6 +90,7 @@ public class AppStart {
 [ 라이브러리 ] : 명령어들을 집합(메소드)해서 .jar 확장자로 만든 집합 , 미리 만들어진 코드 , 예] 도구 제공
 [ 프레임워크 ] : 라이브러리 + 개발에 필요한 환경설정 까지, 예] 개발 틀 제공
 
+
 [ REST ] : 웹의 자원을 관리하는 아키텍처/구조
     1. 자원(Resources) , 행동(Method) , 표현
     2. HTTP 프로토콜(규약) 이용한 클라이언트 와 서버 간의 일관성 통신 구성
@@ -104,47 +105,11 @@ public class AppStart {
         3. 무상태성
         4. 응답 타입은 JSON/ XML 제공
 
-[ @ : 어노테이션 = 설명/방법 ]
-    1. 정의 : 자바 및 Spring 에서 코드에 메타데이터를 추가하는 문법
-    2. 목적 : 1.메타데이터 제공 2. 코드 간소화 3. 가독성 향상
-    3. 종류
-        1. 표준 어노테이션 : 자바에서 기본적으로 제공하는 어노테이션
-            @Override : 상위 클래스로부터 메소드를 재정의을 설명 할때 사용
-            @Deprecated : 더 이상 사용하지 않는 코드라고 설명 할때 사용
-            등등
-        2. 메타 어노테이션 : 코드를 정의하거나 동작 제어 할때 사용되는 어노테이션
-            1. 서블릿(자바 웹클래스) 제공
-            2. 스프링 회사 제공하는 @어노테이션
-
-    4. 어노테이션 만들기
-        1. @interface 어노테이션{  }
-        2. 인터페이스 위에 다양한 @ 붙인다. 설정한다.
-            @Retention( ) : 어노테이션 생성주기(유지기간)을 설정
-                @Retention( RetentionPolicy.RUNTIME ) // 런타임(실행중)까지 유지 뜻
-                @Retention( RetentionPolicy.CLASS ) // .class 파일에 포함 뜻 , 실행이 아닐때 유지 뜻
-                @Retention( RetentionPolicy.SOURCE ) // 컴파일 이후에 삭제 한다는 뜻
-            @Target( ) : 어노테이션 적용할 수 있는 위치(대상)을 설정
-                @Target( ElementType.METHOD ) : 메소드에서 사용 뜻
-                @Target( ElementType.TYPE ) : 클래스,인터페이스 등등 타입 사용 뜻
-                @Target( ElementType.FIELD ) : 멤버변수 사용 뜻
-                @Target( ElementType.PARAMETER ) : 매개변수  사용 뜻
-                @Target( ElementType.CONSTRUCTOR ) : 생성자  사용 뜻
-
-[ 메타데이터 ]
-    1. 정의 : 코드를 설정하는 데이터 , 사용법 정의
-    2. 목적 : 자바 코드에 *추가적인 데이터*를 주입/넣기 할때 사용
-    3. 동작 구조 :
-        1. 컴파일(번역) .java --> .class 파일 번역 하면서 바이트로 변환
-        2. 리플렉션 : 런타임(실행중)에 클래스를 읽어와서 동적(할당)으로 객체 생성/조작
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            - 프로그램 실행중 MYSQL 클래스 로드 함수. new Driver();
-    3. 예] 스티커/라벨/설명서/태그 처럼 해당 코드를 사용하는 방법/부가 정보 *부착*
-
 1. @SpringBootApplication : 스프링부트 환경 설정
     1) @SpringBootConfiguration : 프로젝트내 @Configuration 어노테이션을 찾아서 bean(객체) 설정/등록 할 수 있도록 설정
     2) @EnableAutoConfiguration : Spring Boot 가 자동으로 필요한 bean(객체)을 설정/등록. 웹서버인 내장형 TomCat 설정
-    3) @ComponentScan : **** 현재클래스 기준으로 현 패키지 및 하위 패키지 **** 내 자동으로 컴포넌트(클래스) 들을 스캔해서 등록
-        (1) 스캔 대상 : @Component @RestController @Controller @Service @Repository @Mapper 등등 주로 MVC 어노테이션
+    3) @ComponentScan : **** 현재클래스 기준으로 현 패키지 및 하위 패키지 **** 내 자동으로 컴포넌트(클래스) 들을 스캔해서 *스프링컨테이너*등록
+        (1) 스캔 대상 : @Component @RestController @Controller @Service @Repository 등등 주로 MVC 어노테이션
         (2) 주의할점 : 현재 AppStart 클래스 기준의 상위 패키지는 스캔 안되므로 프로젝트 항상 최상위 폴더에 위치한다.
 
 2. @Component       : bean(객체) 자동으로 생성
@@ -281,11 +246,26 @@ public class AppStart {
     1. 정의 : 객체를 직접 생성하지 않고 외부(스프링 컨테이너)로 부터 주입받도록 하는 방법
     2. 목적 : 객체들간의 결합도(관계)를 낮추고 유지보수성을 향상
     3. 주요 어노테이션
-        @Autowired : 스프링 컨테이너에 등록된 빈(객체)를 꺼내온다.
+        @Autowired : 스프링 *컨테이너에 등록* 된 빈(객체)를 꺼내온다.
+    4. 사용법
+        1) 멤버변수(필드)에 주입
+            @Autowired 클래스명 변수명;
+
+        2) 생성자 에 주입 *권장(final이란? 수정불가능키워드/초기값필수)
+            final 클래스명 변수명;
+            @Autowired
+            public 클래스명( 클래스명 매개변수명 ){ this.변수명 = 매개변수명; }
+
+        3) Setter 를 이용한 주입
+            클래스명 변수명;
+            @Autowired
+            public void set변수명( 클래스명 매개변수명 ){ this.변수명 = 매개변수명; }
+
 
 * 즉] 싱글톤 대신에 사용 가능하다. 즉] DTO 는 싱글톤이 없었으므로 IOC/DI 와 상관없다.
 
-        IOC
+                        [IOC]
+
 --스프링 컨테이너--
 |               |
 |               |
@@ -300,25 +280,47 @@ public class AppStart {
         1] MVC1         : controller/view <--> model
             -> JSP 파일에서 HTML 과 JAVA를 한번에 작성
             -> 장점 : 빠른개발 , 단점 : 유지보수/역할분담 힘듬
+
         2] MVC2         : view <--> controller <--> model
-            -> view 파일은 HTML 만 작성 , controller 에서는 제어(로직) 작성
+            -> view 파일은 HTML 만 작성 , controller 에서는 제어(로직)인 JAVA만 작성
             -> 장점 : 화면/로직 분리 , 단점 : 파일의 수 관리/증가
+
         3] MVC2 3Tire   : view <--> controller <--> service <--> model
             -> Spring MVC 에서 사용되는 패턴 , controller 의 역할 (제어 와 로직) 분리
-            -> 장점 : 관점지향프로그래밍 특화 / 역할분담 , 단점 : 파일 수 관리/증가
+            -> 장점 : 관점지향프로그래밍 특화 / 역할분담 / 유지보수 , 단점 : 파일 수 관리/증가
 
     4. 구역/레이어 종류
         1] VIEW : JSP/타임리프/머스테치/REACT ( HTML , CSS , JS )
             -> 역할 : 프론트엔드(화면구현)
+            -> Spring 프로젝트에서는 resources 폴더에서 찾는다. *JSP는 webapp 폴더 에서 찾는다*
 
         2] CONTROLLER : @RestController @Controller
             -> 역할 : [주] HTTP 통신(요청/응답) , 매개변수/반환 타입 관리 변환 , VIEW 와 SERVICE 중계
 
         3] SERVICE : @Service
-            -> 역할 : 비지니스로직( 기능에 있어서 실질적인 중요코드)
+            -> 역할 : 비지니스로직( 기능에 있어서 실질적인 중요 코드)
             -> CRUD , 데이터 검증 , 연산 , 알고리즘 , *트랜잭션* 등 , SQL 제외한 실질적인 로직
 
         4] Repository : @Repository
             -> 역할 : 저장소( 실질적인 저장소/엔티티 를 조작코드 ) , DAO , ** JPA, myBatis **
 
 * 유효성검사(유지보수단계에서도 계속) 위치 : JS , CONTROLLER , SERVICE , SQL
+
+* 콘솔에 사이드 메뉴중에 최상단 메시지를 클릭하여 위에서부터 'ERROR' 메시지 이하 확인
+1) 스프링서버는(AppStart) 2개 이상 실행 안됨.
+    - port(프로그램 네트워크 식별번호:프로그램당 1개) 중복이다.
+    (1) 현재 실행중인 AppStart 명 확인
+    (2) Web server failed to start. Port 8080 was already in use.
+        - 간혹 port 자동 종료가 안되는경우
+        방법1) 컴퓨터 재시작
+        방법2) 직접 port 끄기 , cmd -> 'netstat -ano'
+            ->  0.0.0.0:8080 의 오른쪽 PID 확인한다.
+            -> 'taskkill /f /pid [PID]'    예] taskkill /f /pid 6420
+
+2) 스프링에서 resources 폴더와 webapp 폴더는 모든 AppStart 가 공유한다.
+3) JSP는 무조건 webapp 폴더 내 자료(JSP/CSS/JS/IMG 등등)만 사용 가능하다.
+4) 프론트엔드 코드(JSP/CSS/JS) 들은 일부(조금)만 수정 할 경우 브라우저 식별 안되므로 브라우저 강력새로고침 한다.
+    단축키 : Ctrl + Shift + R 또는 Ctrl + F5
+5) 모든 프로그래밍 언어들은 키워드(미리만들어진단어)로 변수명/함수명/클래스명 안됨.
+    1. **JAVA는 키워드 오류 바로 발생**
+    2. **JS는 키워드 오류 바로 발생 : CONSOLE확인**
