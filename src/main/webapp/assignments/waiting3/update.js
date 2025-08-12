@@ -1,3 +1,18 @@
+const showWaiting = async () => {
+    const num = new URLSearchParams(location.search).get('num');
+    const phoneDiv = document.querySelector("#phone");
+    const countDiv = document.querySelector("#count");
+
+    const response = await fetch(`/list/find?num=${num}`);
+    const data = await response.json();
+    const phoneData = data.phone;
+    const countData = data.count;
+
+    phoneDiv.value = phoneData;
+    countDiv.value = countData;
+}
+showWaiting();
+
 const updateWaiting = async () => {
     const num = new URLSearchParams(location.search).get('num');
     const phone = document.querySelector("#phone").value;

@@ -7,7 +7,6 @@ const showWaiting = async () => {
 
     const response = await fetch(`/list/find?num=${num}`);
     const data = await response.json();
-    console.log(data);
     const numData = data.num;
     const phoneData = data.phone;
     const countData = data.count;
