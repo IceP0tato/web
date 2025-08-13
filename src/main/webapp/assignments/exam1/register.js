@@ -1,3 +1,20 @@
+const defaultMember = async () => {
+    const custNo = document.querySelector("#custNo");
+    const joinDate = document.querySelector("#joinDate");
+
+    const response = await fetch("/member");
+    const data = await response.json();
+
+    const time = new Date();
+    const year = time.getFullYear();
+    const month = time.getMonth()+1;
+    const date = time.getDate();
+
+    custNo.value = ++data[data.length-1].custNo;
+    joinDate.value = `${year}${month>10?month:'0'+month}${date>10?date:'0'+date}`;
+}
+defaultMember();
+
 const postMember = async () => {
     // value 가져오기
     const custNo = document.querySelector("#custNo").value;

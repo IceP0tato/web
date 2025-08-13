@@ -1,3 +1,32 @@
+const defaultMember = async () => {
+    const num = new URLSearchParams(location.search).get('custNo');
+    const custNo = document.querySelector("#custNo");
+    const custName = document.querySelector("#custName");
+    const phone = document.querySelector("#phone");
+    const address = document.querySelector("#address");
+    const joinDate = document.querySelector("#joinDate");
+    const grade = document.querySelector("#grade");
+    const city = document.querySelector("#city");
+
+    const response = await fetch("/member");
+    const data = await response.json();
+
+    for (let i=0; i<data.length; i++) {
+        const obj = data[i];
+        if (obj.custNo == num) {
+            custNo.value = obj.custNo;
+            custName.value = obj.custName;
+            phone.value = obj.phone;
+            address.value = obj.address;
+            joinDate.value = obj.joinDate;
+            grade.value = obj.grade;
+            city.value = obj.city;
+            return;
+        }
+    }
+}
+defaultMember();
+
 const putMember = async () => {
     // value 가져오기
     const custNo = document.querySelector("#custNo").value;

@@ -13,9 +13,9 @@ public class MoneyDao extends Dao {
     public List<MoneyDto> getMoneyList() {
         try {
             List<MoneyDto> list = new ArrayList<>();
-            String sql = "select * from money_tbl_02 join member_tbl_02 on " +
-                    "money_tbl_02.custNo = member_tbl_02.custNo " +
-                    "order by price";
+            String sql = "select money.custNo, custName, grade, sum(price) from money_tbl_02 money join member_tbl_02 member " +
+                    "on money.custNo = member.custNo " +
+                    "group by member.custNo order by sum(price) desc";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -24,7 +24,7 @@ public class MoneyDao extends Dao {
                 dto.setCustNo(rs.getInt("custNo"));
                 dto.setCustName(rs.getString("custName"));
                 dto.setGrade(rs.getString("grade"));
-                dto.setPrice(rs.getInt("price"));
+                dto.setPrice(rs.getInt("sum(price)"));
                 list.add(dto);
             }
             return list;

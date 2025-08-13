@@ -14,7 +14,7 @@
             <table border="1">
                 <tr>
                     <th>회원번호</th>
-                    <td><input type="number" id="custNo" /></td>
+                    <td><input type="number" id="custNo" disabled /></td>
                 </tr>
                 <tr>
                     <th>회원성명</th>
@@ -30,7 +30,7 @@
                 </tr>
                 <tr>
                     <th>가입일자</th>
-                    <td><input type="text" id="joinDate" /></td>
+                    <td><input type="text" id="joinDate" disabled /></td>
                 </tr>
                 <tr>
                     <th>고객등급 (A:VIP,B:일반,C:직원)</th>
