@@ -96,4 +96,14 @@ public class MemberController {
         int loginMno = (int)session.getAttribute("loginMno");
         return memberService.delete(loginMno, oldPwd);
     }
+
+    @GetMapping("/find/id")
+    public MemberDto findId(@RequestParam String mname, @RequestParam String mphone) {
+        return memberService.findId(mname, mphone);
+    }
+
+    @PutMapping("/find/pwd")
+    public MemberDto findPwd(@RequestBody MemberDto memberDto) {
+        return memberService.findPwd(memberDto);
+    }
 }

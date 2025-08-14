@@ -39,4 +39,12 @@ public class MemberService {
     public boolean delete(int loginMno, String oldPwd) {
         return memberDao.delete(loginMno, oldPwd);
     }
+
+    public MemberDto findId(String mname, String mphone) {
+        return memberDao.findId(mname, mphone);
+    }
+
+    public MemberDto findPwd(MemberDto memberDto) {
+        return memberDao.findPwd(memberDto);
+    }
 }

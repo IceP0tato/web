@@ -3,6 +3,7 @@ package web.model.dao;
 import org.springframework.stereotype.Repository;
 import web.model.dto.MemberDto;
 
+import java.security.SecureRandom;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -125,6 +126,60 @@ public class MemberDao extends Dao {
             ps.setString(2, oldPwd);
             int count = ps.executeUpdate();
             return count == 1;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public MemberDto findId(String mname, String mphone) {
+        try {
+            String sql = "select * from member where mname = ? and mphone = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, mname);
+            ps.setString(2, mphone);
+            ResultSet rs = ps.executeQuery();
+
+            MemberDto dto = new MemberDto();
+            if (rs.next()) {
+                dto.setMid(rs.getString("mid"));
+            }
+            return dto;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public MemberDto findPwd(MemberDto memberDto) {
+        try {
+            // 난수 생성 코드
+            SecureRandom random = new SecureRandom();
+            StringBuilder sb = new StringBuilder();
+            for (int i=0; i<6; i++) {
+                int num = random.nextInt(6);
+                sb.append(num);
+            }
+            String newPwd = sb.toString();
+
+            String sql = "update member set mpwd = ? where mid = ? and mphone = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, newPwd);
+            ps.setString(2, memberDto.getMid());
+            ps.setString(3, memberDto.getMphone());
+            int count = ps.executeUpdate();
+
+            MemberDto dto = new MemberDto();
+            if (count == 1) {
+                sql = "select mpwd from member where mid = ? and mphone = ?";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, memberDto.getMid());
+                ps.setString(2, memberDto.getMphone());
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    dto.setMpwd(rs.getString("mpwd"));
+                }
+            }
+            return dto;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
