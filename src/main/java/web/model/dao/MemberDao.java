@@ -160,6 +160,7 @@ public class MemberDao extends Dao {
             }
             String newPwd = sb.toString();
 
+            // 난수로 비밀번호 변경
             String sql = "update member set mpwd = ? where mid = ? and mphone = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, newPwd);
@@ -167,6 +168,7 @@ public class MemberDao extends Dao {
             ps.setString(3, memberDto.getMphone());
             int count = ps.executeUpdate();
 
+            // 변경된 새로운 비밀번호 값을 찾아서 반환
             MemberDto dto = new MemberDto();
             if (count == 1) {
                 sql = "select mpwd from member where mid = ? and mphone = ?";
