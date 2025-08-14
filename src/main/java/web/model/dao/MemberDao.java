@@ -151,7 +151,7 @@ public class MemberDao extends Dao {
 
     public MemberDto findPwd(MemberDto memberDto) {
         try {
-            // 난수 생성 코드
+            // 난수 생성 코드 (Service 에서 처리하여 전달하는 것이 좋음)
             SecureRandom random = new SecureRandom();
             StringBuilder sb = new StringBuilder();
             for (int i=0; i<6; i++) {
