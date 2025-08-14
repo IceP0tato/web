@@ -155,7 +155,7 @@ public class MemberDao extends Dao {
             SecureRandom random = new SecureRandom();
             StringBuilder sb = new StringBuilder();
             for (int i=0; i<6; i++) {
-                int num = random.nextInt(6);
+                int num = random.nextInt(10);
                 sb.append(num);
             }
             String newPwd = sb.toString();
