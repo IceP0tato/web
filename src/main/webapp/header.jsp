@@ -13,7 +13,7 @@
             <li><a href="/datago/data.jsp">데이터</a></li>
             <li><a href="/kakao/map.jsp">지도</a></li>
             <li><a href="/kakao/datamap.jsp">데이터지도</a></li>
-            <li><a href="/kakao/ex1.jsp"> 실습7 </a></li>
+            <li><a href="/kakao/exam7.jsp"> 실습7 </a></li>
         </ul>
         <ul id="log-menu">
 

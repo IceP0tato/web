@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>Page Title</title>
-    <link href="/css/kakao/ex1.css" rel="stylesheet">
+    <link href="/css/kakao/exam7.css" rel="stylesheet">
 </head>
 <body>
     <jsp:include page="/header.jsp"></jsp:include>
@@ -16,6 +16,6 @@
     </div>
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1ac4a57d8a5927d34020a891fcdbbcbd&libraries=clusterer"></script>
-    <script src="/js/kakao/ex1.js"></script>
+    <script src="/js/kakao/exam7.js"></script>
 </body>
 </html>
