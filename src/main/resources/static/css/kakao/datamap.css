@@ -1,0 +1,18 @@
+#container {
+    display: flex;
+    height: 90vh; /* 반응형 높이 */
+}
+
+#map {
+    width: 80%;
+}
+
+#sidebar {
+    width: 20;
+    padding: 10px;
+    overflow-y: auto; /* 내용이 넘치면 세로 스크롤 생성 */
+}
+
+#store {
+    margin-bottom: 20px;
+}

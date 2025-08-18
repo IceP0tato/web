@@ -1,0 +1,17 @@
+#container {
+    display: flex;
+}
+
+#map {
+    width: 80%;
+}
+
+#sidebar {
+    width: 20;
+    padding: 10px;
+    overflow-y: auto; /* 내용이 넘치면 세로 스크롤 생성 */
+}
+
+#school {
+    margin-bottom: 20px;
+}
