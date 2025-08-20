@@ -9,8 +9,6 @@ create table member (
     mpoint int default 1000,
     constraint primary key(mno)
 );
-drop table member;
-drop table pointlog;
 
 -- ---------------------- pointlog ---------------------------------- --
 CREATE TABLE pointlog (
@@ -36,6 +34,3 @@ INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, 5000, '포인트충전
 INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, -6000, '상품구매');
 -- 회원 1이 이벤트 참여로 포인트 적립 (+500)
 INSERT INTO pointlog (mno, plpoint, plcomment) VALUES (1, 500, '이벤트적립');
-
-select * from member;
-select * from pointlog;
