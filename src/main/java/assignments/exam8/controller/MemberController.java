@@ -23,7 +23,7 @@ public class MemberController {
         int mno = memberService.signup(memberDto);
         if (mno != 0) {
             PointDto pointDto = new PointDto();
-            pointDto.setPlno(mno);
+            pointDto.setMno(mno);
             pointDto.setPlpoint(1000);
             pointDto.setPlcomment("회원가입");
             boolean log = pointService.log(pointDto);
@@ -32,18 +32,34 @@ public class MemberController {
         return mno;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public int login(@RequestBody MemberDto memberDto, HttpSession session) {
         int mno = memberService.login(memberDto);
         if (mno > 0) {
             session.setAttribute("loginMno", mno);
             PointDto pointDto = new PointDto();
-            pointDto.setPlno(mno);
+            pointDto.setMno(mno);
             pointDto.setPlpoint(10);
             pointDto.setPlcomment("로그인");
             boolean log = pointService.log(pointDto);
             System.out.println("log = " + log);
         }
         return mno;
+    }
+
+    @GetMapping("/logout")
+    public void logout(HttpSession session) {
+        if (session.getAttribute("loginMno") != null) {
+            session.removeAttribute("loginMno");
+        }
+    }
+
+    @GetMapping("/info")
+    public MemberDto info(HttpSession session) {
+        if (session.getAttribute("loginMno") != null) {
+            int loginMno = (int)session.getAttribute("loginMno");
+            return memberService.info(loginMno);
+        }
+        return null;
     }
 }

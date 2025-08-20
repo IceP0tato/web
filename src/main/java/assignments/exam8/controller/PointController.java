@@ -14,7 +14,7 @@ public class PointController {
     @Autowired
     private PointService pointService;
 
-    @GetMapping("/log")
+   @GetMapping("/log")
     public List<PointDto> logCheck(HttpSession session) {
         if (session.getAttribute("loginMno") == null) {
             return null;

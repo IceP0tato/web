@@ -17,4 +17,8 @@ public class MemberService {
     public int login(MemberDto memberDto) {
         return memberDao.login(memberDto);
     }
+
+    public MemberDto info(int loginMno) {
+        return memberDao.info(loginMno);
+    }
 }

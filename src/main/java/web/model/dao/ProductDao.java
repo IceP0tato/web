@@ -60,8 +60,8 @@ public class ProductDao extends Dao {
                 dto.setPprice(rs.getInt("pprice"));
                 dto.setPcomment(rs.getString("pcomment"));
                 dto.setPdate(rs.getString("pdate"));
-                dto.setPlat(rs.getInt("plat"));
-                dto.setPlng(rs.getInt("plng"));
+                dto.setPlat(rs.getDouble("plat"));
+                dto.setPlng(rs.getDouble("plng"));
                 dto.setMno(rs.getInt("mno"));
                 list.add(dto);
             }
@@ -103,8 +103,8 @@ public class ProductDao extends Dao {
                 dto.setPprice(rs.getInt("pprice"));
                 dto.setPcomment(rs.getString("pcomment"));
                 dto.setPdate(rs.getString("pdate"));
-                dto.setPlat(rs.getInt("plat"));
-                dto.setPlng(rs.getInt("plng"));
+                dto.setPlat(rs.getDouble("plat"));
+                dto.setPlng(rs.getDouble("plng"));
                 dto.setMno(rs.getInt("mno"));
                 return dto;
             }

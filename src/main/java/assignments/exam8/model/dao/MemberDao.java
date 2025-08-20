@@ -20,7 +20,7 @@ public class MemberDao extends Dao {
             if (count == 1) {
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-                    return rs.getInt("mno");
+                    return rs.getInt(1);
                 }
             }
             return 0;
@@ -38,9 +38,37 @@ public class MemberDao extends Dao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return rs.getInt("mno");
+                int mno = rs.getInt("mno");
+                int mpoint = rs.getInt("mpoint");
+                // 포인트 10 증가
+                sql = "update member set mpoint = ? where mid = ? and mpwd = ?";
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, mpoint+10);
+                ps.setString(2, memberDto.getMid());
+                ps.setString(3, memberDto.getMpwd());
+                System.out.println("point +" + ps.executeUpdate()*10);
+                return mno;
             }
             return 0;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public MemberDto info(int loginMno) {
+        try {
+            String sql = "select * from member where mno = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, loginMno);
+            ResultSet rs = ps.executeQuery();
+
+            MemberDto dto = new MemberDto();
+            if (rs.next()) {
+                dto.setMno(rs.getInt("mno"));
+                dto.setMid(rs.getString("mid"));
+                dto.setMpoint(rs.getInt("mpoint"));
+            }
+            return dto;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
