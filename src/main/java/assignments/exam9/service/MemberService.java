@@ -57,4 +57,14 @@ public class MemberService {
     public int login(MemberDto memberDto) {
         return memberDao.login(memberDto);
     }
+
+    public MemberDto info(int mno) {
+        return memberDao.info(mno);
+    }
+
+    public MemberDto getImageName(int mno) {
+        return memberDao.getImageName(mno);
+    }
+
+
 }

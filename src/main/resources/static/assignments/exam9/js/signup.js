@@ -1,17 +1,13 @@
 const signup = async () => {
-    const mid = document.querySelector("#mid").value;
-    const mpwd = document.querySelector("#mpwd").value;
-    const mimg = document.querySelector("#mimg").value;
-    const obj = {mid, mpwd, mimg};
-    console.log(obj);
-
+    const form = document.querySelector("form");
+    const formData = new FormData(form);
+    
     try {
         const option = {
             method : "POST",
-            headers : {"Content-Type" : "application/json"},
-            body : JSON.stringify(obj)
+            body : formData
         }
-        const response = await fetch('/signup', option);
+        const response = await fetch('/exam9/signup', option);
         const data = await response.json();
 
         if (data > 0) {

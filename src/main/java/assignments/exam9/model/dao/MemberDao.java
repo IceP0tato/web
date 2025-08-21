@@ -58,4 +58,42 @@ public class MemberDao extends Dao {
             throw new RuntimeException(e);
         }
     }
+
+    public MemberDto info(int mno) {
+        try {
+            String sql = "select * from member where mno = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, mno);
+            ResultSet rs = ps.executeQuery();
+
+            MemberDto dto = new MemberDto();
+            if (rs.next()) {
+                dto.setMno(rs.getInt("mno"));
+                dto.setMid(rs.getString("mid"));
+            }
+            return dto;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 최신 이미지 이름 1개 가져오기
+    public MemberDto getImageName(int mno) {
+        try {
+            String sql = "select * from memberimg where mno = ? order by mimgno desc";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, mno);
+            ResultSet rs = ps.executeQuery();
+
+            MemberDto dto = new MemberDto();
+            if (rs.next()) {
+                dto.setMimgname(rs.getString("mimgname"));
+            }
+            return dto;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

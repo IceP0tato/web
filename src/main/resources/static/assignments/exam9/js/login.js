@@ -9,7 +9,7 @@ const login = async () => {
             headers : {"Content-Type" : "application/json"},
             body : JSON.stringify(obj)
         }
-        const response = await fetch('/login', option);
+        const response = await fetch('/exam9/login', option);
         const data = await response.json();
 
         if (data > 0) {

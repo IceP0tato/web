@@ -5,6 +5,7 @@ import assignments.exam9.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/exam9")
@@ -35,7 +36,45 @@ public class MemberController {
         return mno;
     }
 
-    // 이미지 로그 기록
+    // 계정 정보와 이미지 가져오기
+    @GetMapping("/info")
+    public MemberDto info(HttpSession session) {
+        if (session.getAttribute("loginMno") != null) {
+            int mno = (int)session.getAttribute("loginMno");
+            MemberDto dto = memberService.info(mno);
+            MemberDto imageDto = memberService.getImageName(mno);
+            dto.setMimgname(imageDto.getMimgname());
+            return dto;
+        }
+        return null;
+    }
+
+    // 로그아웃
+    @GetMapping("/logout")
+    public void logout(HttpSession session) {
+        if (session.getAttribute("loginMno") != null) {
+            session.removeAttribute("loginMno");
+        }
+    }
+
     // 최신 이미지 불러오기
+    @GetMapping("/image/get")
+    public MemberDto getImageName(HttpSession session) {
+        if (session.getAttribute("loginMno") != null) {
+            int mno = (int)session.getAttribute("loginMno");
+            return memberService.getImageName(mno);
+        }
+        return null;
+    }
+
     // 이미지 수정
+    @PostMapping("/image/post")
+    public boolean postImage(@ModelAttribute MemberDto memberDto, HttpSession session) {
+        if (session.getAttribute("loginMno") != null) {
+            int mno = (int)session.getAttribute("loginMno");
+            MemberDto dto = memberService.info(mno);
+            return memberService.addImage(memberDto, mno);
+        }
+        return false;
+    }
 }
