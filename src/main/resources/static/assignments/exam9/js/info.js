@@ -1,6 +1,6 @@
 const onInfo = async () => {
     try {
-        const response = await fetch('/exam8/log');
+        const response = await fetch('/log');
         const data = await response.json();
 
         console.log(data);
@@ -19,7 +19,7 @@ const onInfo = async () => {
         tbody.innerHTML = html;
     } catch (error) {
         console.log(error);
-        location.href = "/assignments/exam8/login.jsp";
+        location.href = "/assignments/exam9/login.jsp";
     }
 }
 onInfo();

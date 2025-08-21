@@ -52,9 +52,29 @@ const getMap = async () => {
         // 마커에 클릭이벤트를 등록합니다
         kakao.maps.event.addListener(marker, 'click', () => {
             alert(`클릭한 제품명 : ${product.pname}`);
+        
+
+        // JSP는 webapp 이하, css/js/img는 static 이하 경로
+        const productDiv = document.querySelector("#productDiv");
+        let html = '';
+
+        if (product.images.length == 0) {
+            // 이미지가 없으면 기본 이미지 만들기
+            html += `<img src="/upload/default.png" />`;
+        } else {
+            // 여러 개의 img 마크업 만들기
+            for (let i=0; i<product.images.length; i++) {
+                let img = product.images[i];
+                html += `<img src="/upload/${img}" />`;
+            }
+        }
+        console.log(html);
+        productDiv.innerHTML = html;
         });
+        
         return marker;
     })
+    
     // 반복문 종료 후 마커들을 클러스터에 넣기
     clusterer.addMarkers(markers);
 

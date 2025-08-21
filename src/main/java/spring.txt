@@ -184,11 +184,24 @@ public class AppStart {
     1. 정의 : JS 에서 제공하는 내장 (통신) 함수
     2. 역할 : HTTP 요청을 보내고 응답을 비동기적으로 처리 함수
     3. 사용법
-        [ 비동기 방법 ]
-        fetch( url , option )
-            .then( response => response.json() )
-            .then( data => { } )
-            .catch( error => { } )
+        [ 비동기 방법 ] : then 이용한 체인 형식 , 실행순서 보장안됨.
+        () => {
+            fetch( url , option )
+                .then( response => response.json() )
+                .then( data => { } )
+                .catch( error => { } )
+        }
+
+        [ 동기 방법 ] : async/await 이용한 동기 형식 , *권장*:실행순서 보장됨.
+        async () => {
+            try{
+                const response = await fetch( url , option );
+                const data = await response.json();
+            }catch( error ){
+                console.log( error );
+            }
+        }
+
     4.
         - url : Spring프로젝트내 통신할 controller 의 @XXXmapping 에서 정의된 URL
             주로 get/delete queryString : `url ? param1 = ${value1} & param2 = ${value}`
@@ -198,6 +211,7 @@ public class AppStart {
                              headers : { "Content-Type" : "application/json"} ,
                              body : JSON.stringify( data )  }
         - then( 응답객체 => 응답객체.json() ) : 응답객체를 JSON 타입으로 변환
+            * 주의할점 : 자바에서 보내오는 타입이 String 타입 이거나 값이 null 이면 .json() 불가능하다.
         - then( 변환된객체 => { 실행문 } );  : 통신 응답 결과
         - catch( 에러객체 => { 실행문 };     : 통신 에러 발생
 
@@ -296,10 +310,11 @@ public class AppStart {
 
         2] CONTROLLER : @RestController @Controller
             -> 역할 : [주] HTTP 통신(요청/응답) , 매개변수/반환 타입 관리 변환 , VIEW 와 SERVICE 중계
+            -> 사용자/클라이언트 가 1번의 요청은 하나의 controller 위임
 
         3] SERVICE : @Service
             -> 역할 : 비지니스로직( 기능에 있어서 실질적인 중요 코드)
-            -> CRUD , 데이터 검증 , 연산 , 알고리즘 , *트랜잭션* 등 , SQL 제외한 실질적인 로직
+            -> CRUD , 데이터 검증 , 연산 , 알고리즘 , *트랜잭션* 등 , SQL/HTTP객체 제외한 실질적인 로직
 
         4] Repository : @Repository
             -> 역할 : 저장소( 실질적인 저장소/엔티티 를 조작코드 ) , DAO , ** JPA, myBatis **
@@ -419,6 +434,19 @@ public class AppStart {
         1) .transferTo( 파일객체 ); : 지정한 파일객체 경로에 첨부파일을 업로드(이동) , 일반 예외발생
         2) .getOriginalFilename(); : 첨부파일의 파일명 반환
             - uuid+"_"+multipartFile.getOriginalFilename() : 사용자들의 첨부파일명 중복 제거 위한방법
+
+* JS에서 fetch 로 (첨부파일/대용량)폼 전송
+    1. const form = document.querySelector( 폼식별자명 );    : 일반(텍스트위주)폼
+        * 자바와 통신할 경우 form 마크업내 name 속성명 과 자바의 매개변수(dto/map)들의 속성명이 일치
+        * <input name="pname" />    -------->    class productDto{ String pname }
+    2. const formData = new FormData( form );               : 일반(텍스트위주)폼 --> 데이터(바이트)폼 전환
+        * 기본 폼 속성외 속성 추가 : formData.append( '속성명' , 값 );
+    3. const option = { method : "POST" , body : formData }
+        * 데이터폼 전송시 HTTP content-type 타입은 multipart/form-data 이며 fetch 생략 가능,
+
+* 스프링 서버에 업로드된 이미지를 html 에서 출력
+    - <img src="http://localhost:8080/upload/파일명 "/>
+    - <img src="/upload/파일명" />
 
 *다운로드 구현 방법
     1. 흐름구조

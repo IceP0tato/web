@@ -9,7 +9,7 @@ const signup = async () => {
             headers : {"Content-Type" : "application/json"},
             body : JSON.stringify(obj)
         }
-        const response = await fetch('/signup', option);
+        const response = await fetch('/exam8/signup', option);
         const data = await response.json();
 
         if (data > 0) {
