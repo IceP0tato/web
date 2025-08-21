@@ -5,7 +5,6 @@ import assignments.exam9.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/exam9")
@@ -72,7 +71,7 @@ public class MemberController {
     public boolean postImage(@ModelAttribute MemberDto memberDto, HttpSession session) {
         if (session.getAttribute("loginMno") != null) {
             int mno = (int)session.getAttribute("loginMno");
-            MemberDto dto = memberService.info(mno);
+            memberService.info(mno);
             return memberService.addImage(memberDto, mno);
         }
         return false;
