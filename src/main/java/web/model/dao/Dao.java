@@ -17,7 +17,7 @@ public class Dao {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection( db_url, db_user, db_password);
-            System.out.println("Dao.connect"); // soutm 확인차
+            // System.out.println("Dao.connect"); // soutm 확인차
         }catch (Exception e ){  System.out.println(e);    }
     }
 }
