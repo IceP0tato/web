@@ -33,6 +33,7 @@ public class MemberController {
 
     // MemberDao, MemberService 에 없음 (로그인 상태는 DB와 무관)
     // 세션은 서버를 재시작하면 초기화됨
+    // 로그아웃 기능 (세션에서 loginMno 제거)
     @GetMapping("/logout")
     public boolean logout(HttpServletRequest request) {
         HttpSession session = request.getSession();

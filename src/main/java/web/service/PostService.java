@@ -18,11 +18,20 @@ public class PostService {
     }
 
     // param : 카테고리 번호, 현재 페이지 번호, 페이지 당 정보 수
-    public PageDto findAllPost(int cno, int page, int count) {
+    public PageDto findAllPost(int cno, int page, int count, String key, String keyword) {
         // 시작 인덱스 번호 계산 (SQL limit 에서 필요)
         int startRow = (page-1)*count;
         // 자료 개수 구하기
-        int totalCount = postDao.getTotalCount(cno);
+        int totalCount;
+        // 자료 구하기
+        List<PostDto> postList;
+        if (key != null && !key.isEmpty() && keyword != null && !keyword.isEmpty()) { // 검색
+            totalCount = postDao.getTotalCountSearch(cno, key, keyword);
+            postList = postDao.findAllSearch(cno, startRow, count, key, keyword);
+        } else { // 검색이 아닐 때
+            totalCount = postDao.getTotalCount(cno);
+            postList = postDao.findAll(cno, startRow, count);
+        }
         // 전체 페이지 수 구하기
         // 나머지가 있으면 (ex: 42개) 1페이지 (40+2)를 더 줘야 함
         int totalPage = totalCount%count==0?totalCount/count:totalCount/count+1;
@@ -32,8 +41,6 @@ public class PostService {
         // 끝 버튼
         int endBtn = startBtn+btnCount-1;
         if (endBtn > totalPage) endBtn = totalPage; // 끝 버튼이 총 페이지 수보다 커지면 총 페이지 수로 끝 버튼 사용
-        // 자료 구하기
-        List<PostDto> postList = postDao.findAll(cno, startRow, count);
         // PageDto 구성하기
         PageDto pageDto = new PageDto();
         pageDto.setCurrentPage(page); // 현재 페이지 번호
