@@ -9,6 +9,7 @@ import web.service.PostService;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -82,5 +83,19 @@ public class PostController {
     @PutMapping("")
     public int updatePost(@RequestBody PostDto postDto) {
         return postService.updatePost(postDto);
+    }
+
+    @PostMapping("/reply")
+    public int writeReply(@RequestBody Map<String, String> reply, HttpSession session) {
+        // loginMno 가 null -> 로그인 상태가 아닐 시 return (회원제)
+        if (session.getAttribute("loginMno") == null) return 0;
+        int loginMno = (int)session.getAttribute("loginMno");
+        reply.put("mno", loginMno+"");
+        return postService.writeReply(reply);
+    }
+
+    @GetMapping("/reply")
+    public List<Map<String, String>> findAllReply(@RequestParam int pno) {
+        return postService.findAllReply(pno);
     }
 }

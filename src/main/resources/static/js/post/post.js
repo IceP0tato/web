@@ -18,12 +18,13 @@ const findAll = async () => {
         data.data.forEach((post) => {
             html += `<tr>
                         <td>${post.pno}</td>
-                        <td>${post.ptitle}</td>
+                        <td><a href="view.jsp?pno=${post.pno}">${post.ptitle}</a></td>
                         <td>${post.mid}</td>
                         <td>${post.pdate}</td>
                         <td>${post.pview}</td>
                     </tr>`;
         })
+        postBody.innerHTML = html;
         viewPageButtons(data);
     } catch (e) {
         console.log(e);

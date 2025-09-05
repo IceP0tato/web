@@ -64,8 +64,8 @@ select * from productimg;
 
 -- 카테고리 테이블[ 카테고리번호 , 카테고리 이름 ( 공지사항 , 커뮤니티 , QnA , 노하우 등등 ) ]
 create table category(
-   cno      int auto_increment,
-    cname   varchar(100) not null ,
+	cno		int auto_increment,
+    cname	varchar(100) not null ,
     constraint primary key( cno)
 );
 
@@ -78,28 +78,27 @@ insert into category (cname) values ('사용자 리뷰');
 select * from category;
 
 -- 게시물 테이블 [ 번호 , 제목 , 내용 , 작성일 , 조회수 , 작성자 , 카테고리번호 ]
--- 'board' -> 'post' 로 변경, 컬럼 접두사 'b' -> 'p' 로 변경
 create table post(
-   pno         int auto_increment,
-    ptitle       varchar(1000) not null ,
-    pcontent   longtext   not null ,
-    pdate       datetime default now() ,
-    pview      int default 0 ,
-    mno         int , -- 회원번호 fk
-    cno         int , -- 카테고리번호 fk
+	pno			int auto_increment,
+    ptitle 		varchar(1000) not null ,
+    pcontent	longtext	not null ,
+    pdate 		datetime default now() ,
+    pview		int default 0 ,
+    mno			int , -- 회원번호 fk
+    cno			int , -- 카테고리번호 fk
     constraint primary key( pno ) ,
     constraint foreign key ( mno ) references member( mno ) on update cascade on delete cascade ,
-   constraint foreign key ( cno ) references category( cno ) on update cascade on delete cascade
+	constraint foreign key ( cno ) references category( cno ) on update cascade on delete cascade
 );
 
 -- 댓글 테이블 [ 댓글번호 , 내용 , 작성일 , 작성자 , 게시물번호 ]
 -- 참조하는 테이블 및 컬럼 이름 변경: board(bno) -> post(pno)
 create table reply(
-   rno         int auto_increment primary key ,
-    rcontent   longtext ,
-    rdate      datetime default now(),
-    mno         int,
-    pno         int,
+	rno			int auto_increment primary key ,
+    rcontent	longtext ,
+    rdate		datetime default now(),
+    mno			int,
+    pno			int,
     foreign key( mno ) references member(mno) on update cascade on delete cascade ,
     foreign key( pno ) references post(pno) on update cascade on delete cascade
 );
