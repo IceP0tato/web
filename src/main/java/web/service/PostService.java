@@ -52,4 +52,20 @@ public class PostService {
         pageDto.setData(postList); // 페이징한 게시물 리스트
         return pageDto;
     }
+
+    public PostDto getPost(int pno) {
+        return postDao.getPost(pno);
+    }
+
+    public void incrementView(int pno) {
+        postDao.incrementView(pno);
+    }
+
+    public boolean deletePost(int pno) {
+        return postDao.deletePost(pno);
+    }
+
+    public int updatePost(PostDto postDto) {
+        return postDao.updatePost(postDto);
+    }
 }
